@@ -9,6 +9,7 @@ playlist = playlists.first
 tracks = playlist.tracks
 
 tracks.each do |track|
+  track.id
   track.artists.each do |artist|
     artist.name
   end
