@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180808010358) do
+ActiveRecord::Schema.define(version: 20180808014312) do
 
   create_table "artists", force: :cascade do |t|
     t.integer "spotify_id"
@@ -43,13 +43,15 @@ ActiveRecord::Schema.define(version: 20180808010358) do
     t.integer "spotify_id"
     t.text "href"
     t.integer "popularity"
-    t.string "type"
+    t.string "spotify_type"
     t.string "uri"
-    t.integer "track_nunmber"
-    t.integer "duration_mms"
+    t.integer "track_number"
+    t.integer "duration_ms"
     t.boolean "explicit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "artist_id"
+    t.index ["artist_id"], name: "index_tracks_on_artist_id"
     t.index ["playlist_id"], name: "index_tracks_on_playlist_id"
   end
 
