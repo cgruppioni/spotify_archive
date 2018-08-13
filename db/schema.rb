@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20180813035836) do
     t.integer "popularity"
     t.string "spotify_type"
     t.string "uri"
-    t.integer "track_nunmber"
+    t.integer "track_number"
     t.integer "duration_ms"
     t.boolean "explicit"
     t.datetime "created_at", null: false

@@ -8,7 +8,7 @@ class BuildPlaylistsAndTracks < ActiveRecord::Migration[5.1]
     end
 
     create_table :tracks do |t|
-      t.references :playlist, foreign_key: true, index: true
+      t.references :playlist
       t.references :artist, index: true
       t.string :name
       t.integer :spotify_id, unique: true, null: false
@@ -16,7 +16,7 @@ class BuildPlaylistsAndTracks < ActiveRecord::Migration[5.1]
       t.integer :popularity
       t.string :spotify_type
       t.string :uri
-      t.integer :track_nunmber
+      t.integer :track_number
       t.integer :duration_ms
       t.boolean :explicit
       t.timestamps
