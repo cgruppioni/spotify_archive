@@ -5,7 +5,6 @@ module Archive
       offset = 0
 
       user = RSpotify::User.find(ENV["SPOTIFY_USER_ID"])
-      last_id = user.playlists(offset: offset).last.id
 
       # api playlist limit is 20. Continue increasing the limit until nothing is returned.
       until first_round == false && user.playlists(offset: offset).empty?
@@ -13,14 +12,11 @@ module Archive
         playlists = user.playlists(offset: offset)
 
         playlists.each do |playlist|
+          first_track_round = true
           new_playlist = Playlist.create!(name: playlist.name, href: playlist.href, spotify_id: playlist.id)
-
-          playlist.tracks.each do |track|
-            new_track = Track.create!(name: track.name, spotify_id: track.id, spotify_type: track.type, uri: track.uri, track_number: track.track_number, duration_ms: track.duration_ms, explicit: track.explicit, playlist_id: new_playlist.id)
-          end
+          new_playlist.download_tracks
         end
 
-        last_id = playlists.last.id
         offset += 20
       end
     end
