@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20180813035836) do
     t.integer "playlist_id"
     t.integer "artist_id"
     t.string "name"
-    t.integer "spotify_id", null: false
+    t.integer "spotify_id"
     t.text "href"
     t.integer "popularity"
     t.string "spotify_type"

@@ -11,7 +11,7 @@ class BuildPlaylistsAndTracks < ActiveRecord::Migration[5.1]
       t.references :playlist
       t.references :artist, index: true
       t.string :name
-      t.integer :spotify_id, unique: true, null: false
+      t.integer :spotify_id
       t.text :href
       t.integer :popularity
       t.string :spotify_type
