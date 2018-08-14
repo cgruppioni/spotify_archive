@@ -31,8 +31,19 @@ class BuildPlaylistsAndTracks < ActiveRecord::Migration[5.1]
     end
 
     create_table :genres do |t|
-      t.references :artists, foreign_key: true
       t.string :name
+      t.timestamps
+    end
+
+    create_table :track_artists do |t|
+      t.references :track, foreign_key: true
+      t.references :artist, foreign_key: true
+      t.timestamps
+    end
+
+    create_table :artist_genres do |t|
+      t.references :artist, foreign_key: true
+      t.references :genre, foreign_key: true
       t.timestamps
     end
   end

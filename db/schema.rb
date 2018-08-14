@@ -12,6 +12,15 @@
 
 ActiveRecord::Schema.define(version: 20180813035836) do
 
+  create_table "artist_genres", force: :cascade do |t|
+    t.integer "artist_id"
+    t.integer "genre_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["artist_id"], name: "index_artist_genres_on_artist_id"
+    t.index ["genre_id"], name: "index_artist_genres_on_genre_id"
+  end
+
   create_table "artists", force: :cascade do |t|
     t.integer "spotify_id"
     t.string "name"
@@ -22,11 +31,9 @@ ActiveRecord::Schema.define(version: 20180813035836) do
   end
 
   create_table "genres", force: :cascade do |t|
-    t.integer "artists_id"
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["artists_id"], name: "index_genres_on_artists_id"
   end
 
   create_table "playlists", force: :cascade do |t|
@@ -35,6 +42,15 @@ ActiveRecord::Schema.define(version: 20180813035836) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "track_artists", force: :cascade do |t|
+    t.integer "track_id"
+    t.integer "artist_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["artist_id"], name: "index_track_artists_on_artist_id"
+    t.index ["track_id"], name: "index_track_artists_on_track_id"
   end
 
   create_table "tracks", force: :cascade do |t|
