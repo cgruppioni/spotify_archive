@@ -11,13 +11,15 @@ class GenreDownloader
   end
 
   def perform
-    genres.each do |genre|
-      local_genre = Genre.find_by(name: genre)
-      if local_genre.nil?
-        local_genre = Genre.create!(name: genre)
-      end
+    unless genres.nil?
+      genres.each do |genre|
+        local_genre = Genre.find_by(name: genre)
+        if local_genre.nil?
+          local_genre = Genre.create!(name: genre)
+        end
 
-      ArtistGenre.create!(artist_id: artist.id, genre_id: local_genre.id)
+        ArtistGenre.create!(artist_id: artist.id, genre_id: local_genre.id)
+      end
     end
   end
 end
