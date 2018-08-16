@@ -18,16 +18,11 @@ class TrackDownloader
 
       tracks.each do |track|
         new_track = Track.create!(name: track.name, spotify_id: track.id, spotify_type: track.type, uri: track.uri, track_number: track.track_number, duration_ms: track.duration_ms, explicit: track.explicit, playlist_id: playlist.id)
+
         ArtistDownloader.perform(new_track, track)
       end
 
       offset += 100
     end
-  end
-
-  private
-
-  def download_artists(track)
-
   end
 end
