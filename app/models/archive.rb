@@ -12,6 +12,10 @@ module Archive
         spotify_playlists = user.playlists(offset: offset)
 
         spotify_playlists.each do |spotify_playlist|
+          if spotify_playlist.owner.id != user.id
+            next
+          end
+
           first_track_round = true
           new_playlist = Playlist.create!(name: EmojiStripper.strip(spotify_playlist.name), href: spotify_playlist.href, spotify_id: spotify_playlist.id)
           new_playlist.download_tracks(spotify_playlist)
