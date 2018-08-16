@@ -1,5 +1,5 @@
 class Playlist < ApplicationRecord
-  has_many :tracks
+  has_many :tracks, dependent: :destroy
 
   def fields
     column_names - ["created_at", "updated_at", "id"]
