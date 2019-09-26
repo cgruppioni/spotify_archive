@@ -3,10 +3,9 @@ class Playlist < ApplicationRecord
 
   def download_tracks(spotify_playlist)
     offset = 0
-    tracks = spotify_playlist.tracks(offset: offset)
 
-    while tracks.present?
-      tracks.each do |track|
+    until spotify_playlist.tracks(offset: offset).empty?
+      spotify_playlist.tracks(offset: offset).each do |track|
         new_track = Track.create!(name: track.name, spotify_id: track.id, spotify_type: track.type, uri: track.uri, track_number: track.track_number, duration_ms: track.duration_ms, explicit: track.explicit, playlist_id: self.id)
 
         download_artist(new_track, track)
@@ -19,21 +18,21 @@ class Playlist < ApplicationRecord
   def download_artist(new_track, track)
     track.artists.each do |artist|
       if Artist.find_by(spotify_id: artist.id).nil?
-        @artist = Artist.create!(spotify_id: artist.id, name: artist.name, popularity: artist.popularity, uri: artist.uri)
-          download_genre
+        artist = Artist.create!(spotify_id: artist.id, name: artist.name, popularity: artist.popularity, uri: artist.uri)
+          download_genre(artist, artist.genres)
       end
 
-      TrackArtist.create!(track_id: new_track.id, artist_id: @artist.id)
+      TrackArtist.create!(track_id: new_track.id, artist_id: artist.id)
     end
   end
 
-  def download_genre
-    @artist.genres.each do |genre|
+  def download_genre(artist, genres)
+    genres.each do |genre|
       if Genre.find_by(name: genre).nil?
         genre = Genre.create!(name: genre)
       end
 
-      ArtistGenre.create!(artist_id: local_artist.id, genre_id: genre.id)
+      ArtistGenre.create!(artist_id: artist.id, genre_id: genre.id)
     end
   end
 end
