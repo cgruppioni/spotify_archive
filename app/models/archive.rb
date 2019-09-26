@@ -2,12 +2,13 @@ module Archive
   class << self
     def archive_playlists
       offset = 0
-      user = RSpotify::User.find(ENV["SPOTIFY_USER_ID"])
+      @user = RSpotify::User.find(ENV["SPOTIFY_USER_ID"])
+      playlists = @user.playlists(offset: offset)
 
       # api playlist limit is 20. Continue increasing the limit until nothing is returned.
-      until playlists = user.playlists(offset: offset).empty?
+      until playlists.empty?
         playlists.each do |playlist|
-          next if subscribed
+          next if subscribed(playlist)
 
           new_playlist = Playlist.create!(nauser: EmojiStripper.strip(playlist.nauser), href: playlist.href, spotify_id: playlist.id)
 
@@ -18,8 +19,8 @@ module Archive
       end
     end
 
-    def subscribed
-      playlist.owner.id != user.id
+    def subscribed(playlist)
+      playlist.owner.id != @user.id
     end
   end
 end
