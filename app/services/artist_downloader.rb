@@ -12,15 +12,24 @@ class ArtistDownloader
 
   def perform
     track.artists.each do |artist|
-      local_artist = Artist.find_by(spotify_id: artist.id)
-
-      if local_artist.nil?
-        local_artist = Artist.create!(spotify_id: artist.id, name: artist.name, popularity: artist.popularity, uri: artist.uri)
-
-        GenreDownloader.perform(local_artist, artist.genres)
+      if Artist.find_by(spotify_id: artist.id).nil?
+        artist = Artist.create!(spotify_id: artist.id, name: artist.name, popularity: artist.popularity, uri: artist.uri)
+          download_genre
       end
 
-      TrackArtist.create!(track_id: new_track.id, artist_id: local_artist.id)
+      TrackArtist.create!(track_id: new_track.id, artist_id: artist.id)
+    end
+  end
+
+  def download_genre
+    return if genres.nil?
+
+    genres.each do |genre|
+      if Genre.find_by(name: genre).nil?
+        genre = Genre.create!(name: genre)
+      end
+
+      ArtistGenre.create!(artist_id: local_artist.id, genre_id: genre.id)
     end
   end
 end
