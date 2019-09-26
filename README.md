@@ -1,4 +1,2 @@
-# Download your Spotify playlist data and store it locally for archiving.
-
-1. `RSpotify.authenticate(ENV["CLIENT_ID"], ENV["CLIENT_SECRET"])`
-2. `RSpotify::Archive.archive_playlists`
+RSpotify.authenticate(ENV["CLIENT_ID"], ENV["CLIENT_SECRET"])
+RSpotify::Archive.archive_playlists
