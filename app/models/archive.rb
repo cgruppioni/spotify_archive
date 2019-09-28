@@ -28,6 +28,7 @@ module Archive
       new_playlist = Playlist.create!(name: EmojiStripper.strip(playlist.name), href: playlist.href, spotify_id: playlist.id)
 
       new_playlist.download_tracks(playlist)
+      return new_playlist
     end
   end
 end
