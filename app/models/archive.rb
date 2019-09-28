@@ -21,9 +21,9 @@ module Archive
       playlist.owner.id != user.id
     end
 
-    def single_playlist
+    def single_playlist(rank)
       user = RSpotify::User.find(ENV["SPOTIFY_USER_ID"])
-      playlist = user.playlists.second
+      playlist = user.playlists[rank]
 
       new_playlist = Playlist.create!(name: EmojiStripper.strip(playlist.name), href: playlist.href, spotify_id: playlist.id)
 
