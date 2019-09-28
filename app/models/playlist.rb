@@ -47,4 +47,10 @@ class Playlist < ApplicationRecord
       ArtistGenre.create!(artist_id: artist.id, genre_id: local_genre.id)
     end
   end
+
+  def artists
+    artists = []
+    artists << self.tracks.map {|track| track.artists }
+    artists.flatten.sort.uniq
+  end
 end
