@@ -53,4 +53,25 @@ class Playlist < ApplicationRecord
     artists << self.tracks.map {|track| track.artists }
     artists.flatten.sort.uniq
   end
+
+  def genres
+    genres = []
+    genres << artists.map{|artist| artist.genres.pluck(:name) }
+    genres.flatten.sort
+  end
+
+  def genre_ranking
+    ranking = {}
+
+    genres.each do |genre|
+      if ranking[genre].nil?
+        ranking[genre] = 1
+      else
+        ranking[genre] = (ranking[genre] + 1)
+      end
+    end
+
+
+    ranking.sort_by {|k, v| -v}
+  end
 end
