@@ -36,6 +36,15 @@ ActiveRecord::Schema.define(version: 20180813035836) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "playlist_tracks", force: :cascade do |t|
+    t.integer "playlist_id"
+    t.integer "track_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["playlist_id"], name: "index_playlist_tracks_on_playlist_id"
+    t.index ["track_id"], name: "index_playlist_tracks_on_track_id"
+  end
+
   create_table "playlists", force: :cascade do |t|
     t.string "href"
     t.integer "spotify_id", null: false

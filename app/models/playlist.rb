@@ -1,21 +1,31 @@
 class Playlist < ApplicationRecord
-  has_many :tracks, dependent: :destroy
+  has_many :playlist_tracks, dependent: :destroy
+  has_many :tracks, through: :playlist_tracks
 
   def download_tracks(spotify_playlist)
     offset = 0
 
     until spotify_playlist.tracks(offset: offset).empty?
       spotify_playlist.tracks(offset: offset).each do |track|
-        local_track = Track.create!(name: track.name, spotify_id: track.id, spotify_type: track.type, uri: track.uri, track_number: track.track_number, duration_ms: track.duration_ms, explicit: track.explicit, playlist_id: self.id)
-
-        download_artist(local_track, track)
+        download_track(track)
       end
 
       offset += 100
     end
   end
 
-  def download_artist(local_track, track)
+  def download_track(track)
+    local_track = Track.find_by(spotify_id: track.id)
+
+    if local_track.nil?
+      local_track = Track.create!(name: track.name, spotify_id: track.id, spotify_type: track.type, uri: track.uri, track_number: track.track_number, duration_ms: track.duration_ms, explicit: track.explicit, playlist_id: self.id)
+      download_artists(local_track, track)
+    end
+
+    PlaylistTrack.create!(playlist_id: self.id, track_id: local_track.id)
+  end
+
+  def download_artists(local_track, track)
     track.artists.each do |artist|
       local_artist = Artist.find_by(spotify_id: artist.id)
       if local_artist.nil?
