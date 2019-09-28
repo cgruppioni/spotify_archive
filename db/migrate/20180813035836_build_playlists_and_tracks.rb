@@ -2,7 +2,7 @@ class BuildPlaylistsAndTracks < ActiveRecord::Migration[5.1]
   def change
     create_table :playlists do |t|
       t.string :href
-      t.integer :spotify_id, unique: true, null: false
+      t.string :spotify_id, unique: true, null: false
       t.string :name
       t.timestamps
     end
@@ -11,7 +11,7 @@ class BuildPlaylistsAndTracks < ActiveRecord::Migration[5.1]
       t.references :playlist
       t.references :artist, index: true
       t.string :name
-      t.integer :spotify_id
+      t.string :spotify_id
       t.text :href
       t.integer :popularity
       t.string :spotify_type
@@ -23,7 +23,7 @@ class BuildPlaylistsAndTracks < ActiveRecord::Migration[5.1]
     end
 
     create_table :artists do |t|
-      t.integer :spotify_id
+      t.string :spotify_id
       t.string :name
       t.integer :popularity
       t.string :uri

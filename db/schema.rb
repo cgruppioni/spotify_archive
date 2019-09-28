@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20180813035836) do
   end
 
   create_table "artists", force: :cascade do |t|
-    t.integer "spotify_id"
+    t.string "spotify_id"
     t.string "name"
     t.integer "popularity"
     t.string "uri"
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(version: 20180813035836) do
 
   create_table "playlists", force: :cascade do |t|
     t.string "href"
-    t.integer "spotify_id", null: false
+    t.string "spotify_id", null: false
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -66,7 +66,7 @@ ActiveRecord::Schema.define(version: 20180813035836) do
     t.integer "playlist_id"
     t.integer "artist_id"
     t.string "name"
-    t.integer "spotify_id"
+    t.string "spotify_id"
     t.text "href"
     t.integer "popularity"
     t.string "spotify_type"
