@@ -60,7 +60,7 @@ class Playlist < ApplicationRecord
     genres.flatten.sort
   end
 
-  def genre_ranking
+  def ranked_genres
     ranking = {}
 
     genres.each do |genre|
