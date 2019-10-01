@@ -24,9 +24,11 @@ module Archive
       return if subscribed_playlist(playlist, user)
       delete_cached_playlist(playlist)
 
-      new_playlist = Playlist.create!(name: EmojiStripper.strip(playlist.name), href: playlist.href, spotify_id: playlist.id)
+      ActiveRecord::Base.transaction do
+        new_playlist = Playlist.create!(name: EmojiStripper.strip(playlist.name), href: playlist.href, spotify_id: playlist.id)
+        new_playlist.download_tracks(playlist)
+      end
 
-      new_playlist.download_tracks(playlist)
       return new_playlist
     end
 
