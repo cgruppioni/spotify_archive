@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 
 gem 'rails', '~> 5.1.2'
+gem 'rake', '~> 12.3.3'
 gem 'sqlite3'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
