@@ -12,6 +12,11 @@
 /db/*.sqlite3
 /db/*.sqlite3-journal
 
+
+/db/.DS_STORE
+/db/migrate/.DS_STORE
+.DS_STORE
+
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
